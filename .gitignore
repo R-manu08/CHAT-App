@@ -1,0 +1,17 @@
+# Compiled source #
+/.idea/
+*.class
+*.o
+*.exe
+
+# Logs #
+logs/
+*.log
+
+# Dependency directories #
+bin/
+depot/
+
+# Other #
+.DS_Store
+Thumbs.db
