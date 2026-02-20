@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura Chat | Real-time Premium Experience</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="aura-pulse"></div>
+    
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">
+                    <i data-lucide="sparkles"></i>
+                    Aura Chat
+                </h1>
+            </div>
+            
+            <div class="user-list">
+                <div class="user-item">
+                    <div class="user-avatar">AD</div>
+                    <div class="user-details">
+                        <div style="font-weight: 600;">Admin User</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Online</div>
+                    </div>
+                    <div class="status-indicator" style="margin-left: auto;"></div>
+                </div>
+                <!-- Dynamic user list will go here -->
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-area">
+            <header class="chat-header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="user-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">G</div>
+                    <div>
+                        <div style="font-weight: 600; font-size: 0.95rem;">General Channel</div>
+                        <div style="font-size: 0.7rem; color: #10b981;">Real-time Dynamic</div>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 16px; color: var(--text-muted);">
+                    <i data-lucide="search" style="cursor: pointer; width: 20px;"></i>
+                    <i data-lucide="more-vertical" style="cursor: pointer; width: 20px;"></i>
+                </div>
+            </header>
+
+            <div class="messages-container" id="messages">
+                <!-- Fallback/Intro Message -->
+                <div class="message received">
+                    <div class="message-info">System • Now</div>
+                    Welcome to Aura Chat. Connect with others in real-time.
+                </div>
+            </div>
+
+            <div class="input-area">
+                <input type="text" class="message-input" id="message-input" placeholder="Type your message..." autocomplete="off">
+                <button class="send-btn" id="send-btn">
+                    <i data-lucide="send" style="width: 18px; height: 18px;"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase SDK (using compat for simplicity in this script-based setup) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
