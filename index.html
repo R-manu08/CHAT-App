@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,32 +8,73 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div class="aura-pulse"></div>
-    
-    <div class="app-container">
+
+    <!-- Authentication Screen -->
+    <div id="auth-screen" class="auth-container">
+        <div class="auth-card">
+            <h1 class="logo" style="justify-content: center; margin-bottom: 30px;">
+                <i data-lucide="sparkles"></i>
+                Aura Chat
+            </h1>
+
+            <div id="login-form">
+                <input type="email" id="login-email" class="auth-input" placeholder="Email Address">
+                <input type="password" id="login-password" class="auth-input" placeholder="Password">
+                <button id="login-btn" class="auth-submit">Sign In</button>
+                <p class="auth-toggle">New to Aura? <span id="show-signup">Create Account</span></p>
+            </div>
+
+            <div id="signup-form" style="display: none;">
+                <input type="text" id="signup-name" class="auth-input" placeholder="Full Name">
+                <input type="email" id="signup-email" class="auth-input" placeholder="Email Address">
+                <input type="password" id="signup-password" class="auth-input" placeholder="Create Password">
+                <button id="signup-btn" class="auth-submit">Sign Up</button>
+                <p class="auth-toggle">Existing user? <span id="show-login">Sign In</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-app" class="app-container" style="display: none;">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="sidebar-header">
+            <div class="sidebar-header" style="display: flex; justify-content: space-between; align-items: center;">
                 <h1 class="logo">
                     <i data-lucide="sparkles"></i>
-                    Aura Chat
+                    Aura
                 </h1>
+                <button id="logout-btn"
+                    style="background: none; border: none; color: var(--text-muted); cursor: pointer;">
+                    <i data-lucide="log-out" style="width: 18px;"></i>
+                </button>
             </div>
-            
+
             <div class="user-list">
-                <div class="user-item">
-                    <div class="user-avatar">AD</div>
+                <div class="profile-preview" id="current-user-profile">
+                    <div class="user-avatar" id="my-avatar">?</div>
                     <div class="user-details">
-                        <div style="font-weight: 600;">Admin User</div>
-                        <div style="font-size: 0.75rem; color: var(--text-muted);">Online</div>
+                        <div id="my-name" style="font-weight: 600;">Loading...</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Active Profile</div>
                     </div>
-                    <div class="status-indicator" style="margin-left: auto;"></div>
                 </div>
-                <!-- Dynamic user list will go here -->
+                <div
+                    style="margin: 20px 0 10px 0; font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">
+                    Community</div>
+                <div id="active-users">
+                    <!-- Dynamic user list -->
+                </div>
+            </div>
+
+            <div class="theme-selector">
+                <div class="theme-dot sunset" data-theme="sunset"></div>
+                <div class="theme-dot midnight" data-theme="midnight"></div>
+                <div class="theme-dot aurora" data-theme="aurora"></div>
             </div>
         </aside>
 
@@ -40,28 +82,20 @@
         <main class="chat-area">
             <header class="chat-header">
                 <div style="display: flex; align-items: center; gap: 12px;">
-                    <div class="user-avatar" style="width: 32px; height: 32px; font-size: 0.8rem;">G</div>
+                    <div class="user-avatar"
+                        style="width: 32px; height: 32px; font-size: 0.8rem; background: var(--accent);">G</div>
                     <div>
                         <div style="font-weight: 600; font-size: 0.95rem;">General Channel</div>
-                        <div style="font-size: 0.7rem; color: #10b981;">Real-time Dynamic</div>
+                        <div style="font-size: 0.7rem; color: #10b981;">Real-time Presence</div>
                     </div>
-                </div>
-                <div style="display: flex; gap: 16px; color: var(--text-muted);">
-                    <i data-lucide="search" style="cursor: pointer; width: 20px;"></i>
-                    <i data-lucide="more-vertical" style="cursor: pointer; width: 20px;"></i>
                 </div>
             </header>
 
-            <div class="messages-container" id="messages">
-                <!-- Fallback/Intro Message -->
-                <div class="message received">
-                    <div class="message-info">System • Now</div>
-                    Welcome to Aura Chat. Connect with others in real-time.
-                </div>
-            </div>
+            <div class="messages-container" id="messages"></div>
 
             <div class="input-area">
-                <input type="text" class="message-input" id="message-input" placeholder="Type your message..." autocomplete="off">
+                <input type="text" class="message-input" id="message-input" placeholder="Type your message..."
+                    autocomplete="off">
                 <button class="send-btn" id="send-btn">
                     <i data-lucide="send" style="width: 18px; height: 18px;"></i>
                 </button>
@@ -69,12 +103,16 @@
         </main>
     </div>
 
-    <!-- Firebase SDK (using compat for simplicity in this script-based setup) -->
+    <!-- Firebase SDK Compat -->
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"></script>
+    <script src="firebase.js"></script>
     <script src="app.js"></script>
     <script>
         lucide.createIcons();
     </script>
 </body>
+
 </html>
