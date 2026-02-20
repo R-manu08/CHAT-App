@@ -1,9 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Global styles */
-body {
-    @apply bg-gray-100 text-gray-800;
-    font-family: 'Helvetica', 'Arial', sans-serif;
-}
