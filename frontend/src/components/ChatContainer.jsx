@@ -6,10 +6,11 @@ import MessageInput from './MessageInput.jsx';
 import MessageSkeleton from './skeleton/MessageSkeleton.jsx';
 import { useAuthStore } from '../store/useAuthStore.js';
 import { formatMessageTime } from '../lib/utils.js';
+import { Trash2 } from 'lucide-react';
 
 
 const ChatContainer = () => {
-  const { messages, getMessages, isMessagesLoading, selectedUser, subscribeToMessages, unsubscribeFromMessage } = useChatStore();
+  const { messages, getMessages, isMessagesLoading, selectedUser, subscribeToMessages, unsubscribeFromMessage, deleteMessage, typingUsers } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
   useEffect(() => {
@@ -45,7 +46,7 @@ const ChatContainer = () => {
         {messages.map((message) => (
           <div
             key={message._id}
-            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
+            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"} group`}
             ref={messageEndRef}
           >
             <div className=" chat-image avatar">
@@ -75,8 +76,31 @@ const ChatContainer = () => {
               )}
               {message.text && <p>{message.text}</p>}
             </div>
+            {message.senderId === authUser._id && (
+              <button
+                onClick={() => deleteMessage(message._id)}
+                className="chat-footer opacity-0 group-hover:opacity-100 transition-opacity ml-1 text-error"
+                title="Delete message"
+              >
+                <Trash2 size={14} />
+              </button>
+            )}
           </div>
         ))}
+
+        {typingUsers.includes(selectedUser._id) && (
+          <div className="chat chat-start">
+            <div className="chat-image avatar">
+              <div className="size-10 rounded-full border">
+                <img src={selectedUser.profilePic || "/avatar.png"} alt="profile pic" />
+              </div>
+            </div>
+            <div className="chat-bubble bg-transparent p-0 flex items-center gap-1">
+              <span className="loading loading-dots loading-xs"></span>
+              <span className="text-xs italic opacity-70">{selectedUser.fullName} is typing...</span>
+            </div>
+          </div>
+        )}
       </div>
 
       <MessageInput />

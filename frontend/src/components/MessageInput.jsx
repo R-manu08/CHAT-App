@@ -7,17 +7,18 @@ const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  const { sendMessage, sendTypingStatus } = useChatStore();
+  const typingTimeoutRef = useRef(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if(!file.type.startsWith("image/")){
+    if (!file.type.startsWith("image/")) {
       toast.error("Please select an image file");
       return;
     }
 
     const reader = new FileReader();
-    reader.onload =() => {
+    reader.onload = () => {
       setImagePreview(reader.result);
     };
     reader.readAsDataURL(file);
@@ -39,10 +40,24 @@ const MessageInput = () => {
       });
       setText("");
       setImagePreview(null);
-      if(!fileInputRef.current) fileInputRef.current.value = ""; 
+      if (!fileInputRef.current) fileInputRef.current.value = "";
+      sendTypingStatus(false);
     } catch (error) {
       console.error("Failed to send message", error);
     }
+  };
+
+  const handleInputChange = (e) => {
+    setText(e.target.value);
+
+    // Typing indicator logic
+    sendTypingStatus(true);
+
+    if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
+
+    typingTimeoutRef.current = setTimeout(() => {
+      sendTypingStatus(false);
+    }, 2000);
   };
 
   return (
@@ -74,7 +89,7 @@ const MessageInput = () => {
             className="w-full input input-bordered rounded-lg input-sm sm:input-md"
             placeholder="Type a message..."
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={handleInputChange}
           />
           <input
             type="file"

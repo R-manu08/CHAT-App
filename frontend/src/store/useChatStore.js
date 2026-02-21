@@ -10,6 +10,7 @@ export const useChatStore = create((set, get) => ({
     selectedUser: null,
     isUsersLoading: false,
     isMessagesLoading: false,
+    typingUsers: [], // Array of user IDs who are typing
 
     getUsers: async () => {
         set({ isUsersLoading: true });
@@ -48,21 +49,34 @@ export const useChatStore = create((set, get) => ({
         }
     },
 
-    // deleteMessage: async (messageId) => {
-    //     const { SelectedUser, messages } = get();
-    //     try {
-    //         const res = await axiosInstance.delete(`/messages/delete/${messageId}`)
-    //         set({messages: message.filter(message => message._id !== messageId)})
-    //         toast.success("Message deleted succesfully");
-    //     } catch (error) {
-    //         toast.error(error.response.data.message);
-    //     }
+    deleteMessage: async (messageId) => {
+        const { messages } = get();
+        try {
+            await axiosInstance.delete(`/messages/delete/${messageId}`)
+            set({ messages: messages.filter(message => message._id !== messageId) })
+            toast.success("Message deleted successfully");
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    },
 
-    // },
+    sendTypingStatus: (isTyping) => {
+        const { selectedUser } = get();
+        if (!selectedUser) return;
+
+        const socket = useAuthStore.getState().socket;
+        if (!socket || !socket.connected) return;
+
+        if (isTyping) {
+            socket.emit("typing", { receiverId: selectedUser._id });
+        } else {
+            socket.emit("stopTyping", { receiverId: selectedUser._id });
+        }
+    },
 
     subscribeToMessages: () => {
-        const {selectedUser} = get();
-        if(!selectedUser) return;
+        const { selectedUser } = get();
+        if (!selectedUser) return;
 
         const socket = useAuthStore.getState().socket;
 
@@ -71,11 +85,31 @@ export const useChatStore = create((set, get) => ({
             if (!isMessageSentMesageFromSelectedUser) return;
             set({ messages: [...get().messages, newMessage] });
         });
+
+        socket.on("messageDeleted", (messageId) => {
+            set({
+                messages: get().messages.filter((m) => m._id !== messageId),
+            });
+        });
+
+        socket.on("userTyping", ({ senderId }) => {
+            if (senderId !== selectedUser._id) return;
+            set({ typingUsers: [...new Set([...get().typingUsers, senderId])] });
+        });
+
+        socket.on("userStoppedTyping", ({ senderId }) => {
+            set({
+                typingUsers: get().typingUsers.filter((id) => id !== senderId),
+            });
+        });
     },
 
     unsubscribeFromMessage: () => {
         const socket = useAuthStore.getState().socket;
         socket.off("newMessage");
+        socket.off("messageDeleted");
+        socket.off("userTyping");
+        socket.off("userStoppedTyping");
     },
 
     setSelectedUser: (selectedUser) => set({ selectedUser }),
