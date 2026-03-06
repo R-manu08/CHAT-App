@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap');
+
+:root {
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Space Grotesk', sans-serif;
+  --transition-speed: 0.8s;
+}
+
+/* Theme: Obsidian (Default Deep Dark) */
+[data-theme='obsidian'] {
+  --bg-dark: #070709;
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-border-hover: rgba(99, 102, 241, 0.3);
+  --accent-primary: #6366f1;
+  --accent-secondary: #a855f7;
+  --text-main: #ffffff;
+  --text-dim: #a1a1aa;
+}
+
+/* Theme: Cyber Neon (High Contrast Pink/Purple) */
+[data-theme='cyber'] {
+  --bg-dark: #0d0221;
+  --glass-bg: rgba(255, 0, 255, 0.03);
+  --glass-border: rgba(255, 0, 255, 0.2);
+  --glass-border-hover: #ff00ff;
+  --accent-primary: #ff00ff;
+  --accent-secondary: #00ffff;
+  --text-main: #ffffff;
+  --text-dim: #b8b8b8;
+}
+
+/* Theme: Midnight Emerald (Tech Green) */
+[data-theme='emerald'] {
+  --bg-dark: #020c0a;
+  --glass-bg: rgba(16, 185, 129, 0.03);
+  --glass-border: rgba(16, 185, 129, 0.2);
+  --glass-border-hover: #10b981;
+  --accent-primary: #10b981;
+  --accent-secondary: #3b82f6;
+  --text-main: #ecfdf5;
+  --text-dim: #6ee7b7;
+}
+
+/* Theme: Solaris (Refined Light Mode) */
+[data-theme='solaris'] {
+  --bg-dark: #fdfcfb;
+  --glass-bg: rgba(0, 0, 0, 0.02);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-border-hover: rgba(234, 88, 12, 0.3);
+  --accent-primary: #ea580c;
+  --accent-secondary: #f59e0b;
+  --text-main: #1a1a1a;
+  --text-dim: #4b5563;
+}
+
+/* Theme: Sakura (Soft Aesthetic Pink) */
+[data-theme='sakura'] {
+  --bg-dark: #120a0d;
+  --glass-bg: rgba(244, 114, 182, 0.03);
+  --glass-border: rgba(244, 114, 182, 0.2);
+  --glass-border-hover: #f472b6;
+  --accent-primary: #f472b6;
+  --accent-secondary: #fb7185;
+  --text-main: #fff1f2;
+  --text-dim: #fda4af;
+}
+
+/* Theme: Deep Sea (Abyssal Blue) */
+[data-theme='sea'] {
+  --bg-dark: #020617;
+  --glass-bg: rgba(56, 189, 248, 0.03);
+  --glass-border: rgba(56, 189, 248, 0.2);
+  --glass-border-hover: #38bdf8;
+  --accent-primary: #38bdf8;
+  --accent-secondary: #1d4ed8;
+  --text-main: #f0f9ff;
+  --text-dim: #7dd3fc;
+}
+
+/* Theme: Nebula (Space Purple) */
+[data-theme='nebula'] {
+  --bg-dark: #0f071a;
+  --glass-bg: rgba(139, 92, 246, 0.03);
+  --glass-border: rgba(139, 92, 246, 0.2);
+  --glass-border-hover: #8b5cf6;
+  --accent-primary: #8b5cf6;
+  --accent-secondary: #d946ef;
+  --text-main: #f5f3ff;
+  --text-dim: #c4b5fd;
+}
+
+/* Theme: Nostalgia (Anime Inspired) */
+[data-theme='nostalgia'] {
+  --bg-dark: #fff9e6;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-border-hover: #ff4757;
+  --accent-primary: #1e90ff;
+  --accent-secondary: #ff4757;
+  --text-main: #2f3542;
+  --text-dim: #57606f;
+}
+
+/* Theme: Plum Noir (Moody Maximalism) */
+[data-theme='plum'] {
+  --bg-dark: #120512;
+  --glass-bg: rgba(107, 15, 26, 0.05);
+  --glass-border: rgba(107, 15, 26, 0.2);
+  --glass-border-hover: #b91c1c;
+  --accent-primary: #6b0f1a;
+  --accent-secondary: #4b0082;
+  --text-main: #fce7f3;
+  --text-dim: #f9a8d4;
+}
+
+/* Theme: Wasabi (Electric Energy) */
+[data-theme='wasabi'] {
+  --bg-dark: #051205;
+  --glass-bg: rgba(173, 255, 47, 0.05);
+  --glass-border: rgba(173, 255, 47, 0.2);
+  --glass-border-hover: #adff2f;
+  --accent-primary: #adff2f;
+  --accent-secondary: #32cd32;
+  --text-main: #f0fff0;
+  --text-dim: #86efac;
+}
+
+/* Theme: Nordic Ice (Serene Blue) */
+[data-theme='ice'] {
+  --bg-dark: #f0f9ff;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(14, 165, 233, 0.2);
+  --glass-border-hover: #0284c7;
+  --accent-primary: #0ea5e9;
+  --accent-secondary: #0369a1;
+  --text-main: #0c4a6e;
+  --text-dim: #0369a1;
+}
+
+/* Theme: Lavender Gold (Luxury) */
+[data-theme='lavender'] {
+  --bg-dark: #0f0f1a;
+  --glass-bg: rgba(214, 193, 229, 0.05);
+  --glass-border: rgba(241, 231, 179, 0.2);
+  --glass-border-hover: #f1e7b3;
+  --accent-primary: #d6c1e5;
+  --accent-secondary: #f1e7b3;
+  --text-main: #f1e7b3;
+  --text-dim: #d6c1e5;
+}
+
+/* Theme: Synthwave Retro */
+[data-theme='synthwave'] {
+  --bg-dark: #0f0f23;
+  --glass-bg: rgba(255, 0, 110, 0.05);
+  --glass-border: rgba(58, 134, 255, 0.2);
+  --glass-border-hover: #ff006e;
+  --accent-primary: #ff006e;
+  --accent-secondary: #3a86ff;
+  --text-main: #ffffff;
+  --text-dim: #3a86ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color var(--transition-speed), color var(--transition-speed), border-color var(--transition-speed);
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.canvas-container canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+section {
+  min-height: 100vh;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 3rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-hover);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+}
+
+/* Decorative Overrides */
+[data-theme='scrapbook'] .glass-card {
+  border-radius: 2px;
+  box-shadow: 2px 2px 0px #8b5e34, 5px 5px 15px rgba(0,0,0,0.1);
+  background-image: radial-gradient(#dcd1b3 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+[data-theme='scrapbook'] .gradient-text {
+  background: none;
+  -webkit-text-fill-color: var(--text-main);
+  text-decoration: underline wavy var(--accent-secondary);
+}
+
+[data-theme='manga'] .glass-card {
+  border: 4px solid #000000;
+  border-radius: 0;
+  box-shadow: 8px 8px 0px #000000;
+  background-image: radial-gradient(#000 10%, transparent 10%);
+  background-size: 10px 10px;
+  background-position: 0 0;
+  background-color: #fff;
+}
+
+[data-theme='manga'] .gradient-text {
+  background: none;
+  -webkit-text-fill-color: #000;
+  text-transform: uppercase;
+  font-weight: 900;
+  -webkit-text-stroke: 1px #000;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #fff 0%, var(--accent-primary) 50%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-img {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.section-img:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
