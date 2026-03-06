@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    journey: {
+      tenth: { type: String, default: "" },
+      twelfth: { type: String, default: "" },
+    },
   },
   { timestamps: true }
 );

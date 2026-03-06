@@ -6,6 +6,8 @@ const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
   const [name, setName] = useState(authUser?.fullName || '');
   const [email, setEmail] = useState(authUser?.email || '');
+  const [tenth, setTenth] = useState(authUser?.journey?.tenth || '');
+  const [twelfth, setTwelfth] = useState(authUser?.journey?.twelfth || '');
   const [selectedImg, setSelectedImg] = useState(null);
 
   const handleImageUpload = async (e) => {
@@ -29,7 +31,11 @@ const ProfilePage = () => {
   };
 
   const handleUpdateProfile = async () => {
-    const updatedProfile = { fullName: name, email };
+    const updatedProfile = { 
+      fullName: name, 
+      email, 
+      journey: { tenth, twelfth } 
+    };
     if (selectedImg) {
       updatedProfile.profilePic = selectedImg;
     }
@@ -105,7 +111,42 @@ const ProfilePage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="px-4 py-2.5 bg-base-200 rounded-lg border w-full"
+                disabled
               />
+            </div>
+
+            <div className="pt-4 border-t border-zinc-700">
+              <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
+                <User className="w-5 h-5 text-primary" />
+                My Journey
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <div className="text-sm text-zinc-400 flex items-center gap-2">
+                    10th Standard (2020-21)
+                  </div>
+                  <input
+                    type="text"
+                    value={tenth}
+                    onChange={(e) => setTenth(e.target.value)}
+                    className="px-4 py-2.5 bg-base-200 rounded-lg border w-full focus:outline-none focus:border-primary transition-colors"
+                    placeholder="e.g. 2020-21"
+                  />
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="text-sm text-zinc-400 flex items-center gap-2">
+                    12th Standard (2022-23)
+                  </div>
+                  <input
+                    type="text"
+                    value={twelfth}
+                    onChange={(e) => setTwelfth(e.target.value)}
+                    className="px-4 py-2.5 bg-base-200 rounded-lg border w-full focus:outline-none focus:border-primary transition-colors"
+                    placeholder="e.g. 2022-23"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
